@@ -43,12 +43,21 @@ export default {
 # To Run
 - To run the react app localy `npm run dev` in terminal
 
-# To make changes
+# To check change and sync
 - do `git fetch` to make sure that your code on your local machine is in sync with remote ie github
-- do `git pull` if your local is out of sync with remote
+- do `git pull` onto the correct branch if your local branch is out of sync with remote branch
+
+# To make changes
 - If you want to make any changes make sure to create a branch with command `git checkout -b nameofbranch`
 
-- After making whatever changes to the branch you created run this command `git commit -am "message"` then `git push` or use vs code to commit and push.
+- After making whatever changes to the branch you created run this command 
+```
+git add . 
+// stage changes
+git commit -m "summary of change"
+git push
+```
+or use vs code to commit and push.
 when doing the first option you might see a error message like this
 ```
 fatal: The current branch dummybranch has no upstream branch.    
