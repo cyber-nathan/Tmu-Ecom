@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import TopNavebar from './components/navbar/Navebar';
 import LoginPage from './pages/LoginPage';
+import ProductDisplay from './components/productDisplay/ProductDisplay';
 // import ProductCard from './components/productCard/ProductCard';
 
 
@@ -14,20 +15,13 @@ function App() {
 
   return (
     <BrowserRouter>
-    {/* <TopNavebar /> */}
-    {/* <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/blog">Blog</Link></li>
-        <li><Link to="/new-post">New Post</Link></li>
-      </ul>
-    </nav> */}
+    <TopNavebar />
       <Routes>
         {/* Define the route for the Home component */}
         <Route path="/" element={<LoginPage />} />
         
         {/* Define the route for the Blog component */}
-        <Route path="/ecom" element={<TopNavebar /> } />
+        <Route path="/ecom" element={<ProductDisplay /> } />
         
         {/* Define the route for the NewPost component */}
         {/* <Route path="/new-post" element={<NewPost />} /> */}

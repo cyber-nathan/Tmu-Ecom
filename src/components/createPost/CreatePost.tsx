@@ -7,77 +7,40 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { ProdItem, ITEM } from '../../interfaces';
 import './CreatePost.css';
 
-// Define an interface for the component's props
+
+
 interface Props {
-    onHide: () => void;
-    onPost: (data: any) => void;
-    show: boolean; // Declaring that 'show' is expected to be a boolean
-  }
-  
-  interface FormData {
-    title: string;
-    price: string;
-    description: string;
-    files: (string | null)[];
-  }
-  
-  function CreatePost(props: Props) {
-    const [formData, setFormData] = useState<FormData>({
-      title: '',
-      price: '',
-      description: '',
-      files: [],
-    });
+  onHide: () => void;
+  //onPost: (data: any) => void;
+  show: boolean; // Declaring that 'show' is expected to be a boolean
+}
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name, value } = event.target;
-      console.log("event", name, value)
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    };
   
-    const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>, slotIndex: number) => {
-      const file = event.target.files ? event.target.files[0] : null; // Check if files is null
-      const newFiles = [...formData.files];
-      newFiles[slotIndex] = file ? URL.createObjectURL(file) : null;
-      setFormData((prevData) => ({
-        ...prevData,
-        files: newFiles,
-      }));
-    };
-  
-    // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    //   const files = event.target.files;
-    //   if (files) {
-    //     const newFiles = [...formData.files];
-    //     newFiles[index] = files[0]; // Assuming you're interested in the first file only
-    //     setFormData((prevData) => ({
-    //       ...prevData,
-    //       files: newFiles,
-    //     }));
-    //   }
-    // };
-  
+  function CreatePost(props:Props) {
+    const [prodName, setProdName] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [owner, setOwner] = useState('');
+    const [picture, setPicture] = useState('');
+
     const handleSubmit = () => {
-      props.onPost(formData); // Pass the form data back to the parent component
-      //props.onHide(); // Hide the modal
+      const newItem: ProdItem = {
+        id: new Date().getTime(), // Simple way to generate unique IDs
+        picture,
+        prodName,
+        price: Number(price),
+        owner,
+        description,
+      };
+  
+      //props.onUpdateDatabase(newItem); // make it so that the New item gets pushed to the ITEM ARRAY 
+      ITEM.push(newItem);
+      console.log("New item In ITEM", ITEM)
+      props.onHide(); // Hide modal after submission
     };
-
-    function areTextFieldsFilled() {
-      if (formData.title.trim() !== '' && formData.price.trim() !== '' && formData.description.trim() !== '') {
-        return true;
-      }
-    }
-
-    // const areTextFieldsFilled = () => {
-    //   return formData.title.trim() !== '' && formData.price.trim() !== '' && formData.description.trim() !== '';
-    // };
-
-
 
     return (
       <Modal
@@ -97,29 +60,8 @@ interface Props {
             <Row className="mb-3">
               <Col xs={6}>
                 <div className="upload-slot">
-                  <input type="file" onChange={(event) => handleFileInputChange(event, 0)} className="form-control" />
+                  <input type="file" onChange={(e) => setPicture(e.target.value)} className="form-control" />
                   Upload File 1
-                </div>
-              </Col>
-              <Col xs={6}>
-                <div className="upload-slot">
-                  <input type="file" onChange={(event) => handleFileInputChange(event, 1)} className="form-control" />
-                  Upload File 2
-                </div>
-              </Col>
-            </Row>
-            {/* Second row of 2 columns */}
-            <Row>
-              <Col xs={6}>
-                <div className="upload-slot">
-                  <input type="file"  onChange={(event) => handleFileInputChange(event, 2)}className="form-control" />
-                  Upload File 3
-                </div>
-              </Col>
-              <Col xs={6}>
-                <div className="upload-slot">
-                  <input type="file"  onChange={(event) => handleFileInputChange(event, 3)}className="form-control" />
-                  Upload File 4
                 </div>
               </Col>
             </Row>
@@ -136,7 +78,7 @@ interface Props {
           aria-label="Title"
           aria-describedby="basic-addon1"
           name="title"
-          onChange={handleInputChange}
+          onChange={(e) => setProdName(e.target.value)}
         />
         </InputGroup>
       <InputGroup className="mb-3">
@@ -144,7 +86,7 @@ interface Props {
         <Form.Control 
           aria-label="Amount (to the nearest dollar)" 
           name="price"
-          onChange={handleInputChange}
+          onChange={(e) => setPrice(e.target.value)}
           />
         <InputGroup.Text>.00</InputGroup.Text>
       </InputGroup>
@@ -155,7 +97,7 @@ interface Props {
         as="textarea" 
         aria-label="With textarea" 
         name="description"
-        onChange={handleInputChange}
+        onChange={(e) => setDescription(e.target.value)}
         />
       </InputGroup>
     </Form>
@@ -167,7 +109,7 @@ interface Props {
         <Button variant="secondary" onClick={props.onHide}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={!areTextFieldsFilled()}>Post</Button>
+          <Button  onClick={handleSubmit}>Post</Button>
         </Modal.Footer>
       </Modal>
     );

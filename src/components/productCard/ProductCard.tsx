@@ -7,23 +7,23 @@ import './ProductCard.css'; // Import your CSS file
 // make image fit properly in the card
 
 function ProductCard(props: any) {
-  //console.log(props);
-  console.log("this is img", props.info.files[0]);
+  //console.log("prodCard", props); // this also get displayed twice for some reason 
+  //console.log("this is img", props.item.picture);
   return (
     <Card style={{ width: '1000px' }} className='hover-effect'>
       <div className="row">
         <div className="col-md-4">
-          <Card.Img variant="top" src={props.info.files[0]} width="100" height="210"/> 
+          <Card.Img variant="top" src={props.item.picture} width="100" height="210"/> 
           
         </div>
         <div className="col-md-8">
           <Card.Body>
-            <Card.Title>{props. info.title}</Card.Title>
+            <Card.Title>{props.item.prodName}</Card.Title>
             <ListGroup className="list-group-flush">
-              <ListGroup.Item>Price: ${props.info.price}</ListGroup.Item>
+              <ListGroup.Item>Price: ${props.item.price}</ListGroup.Item>
               <ListGroup.Item>
                 <Card.Text>
-                {props.info.description}
+                {props.item.description}
                 </Card.Text>
               </ListGroup.Item>
             </ListGroup>
