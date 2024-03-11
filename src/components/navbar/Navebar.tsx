@@ -17,7 +17,7 @@ function TopNavebar() {
       <div style={{paddingBottom: '25px'}}>
         <Navbar className="bg-body-tertiary">
           <Container>
-            <Navbar.Brand href="/">
+            <Navbar.Brand href="#home">
               <img
                 src={TmuLogo}
                 width="100"
@@ -37,8 +37,7 @@ function TopNavebar() {
             </Form>
 
             <Form className="d-flex">
-              <Button variant="outline-primary" href="/ecom" className="m-2">Posts</Button>
-              <Button variant="outline-primary" className="m-2" onClick={() => setModalShow(true)}>Add Post</Button>
+              <Button variant="outline-primary" onClick={() => setModalShow(true)}>Add Post</Button>
 
               <CreatePost 
                 show={modalShow}
