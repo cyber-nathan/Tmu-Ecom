@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 //import Modal from 'react-bootstrap/Modal';
-import TmuLogo from'C:/Users/Nathan/Documents/Cps630Proj/Tmu-Ecom/src/picture/tmuLogo.png'; // local rn
+import TmuLogo from'../../picture/tmuLogo.png'; // local rn
 import React, { useState} from 'react';
 import CreatePost from '../createPost/CreatePost';
 
@@ -17,7 +17,7 @@ function TopNavebar() {
       <div style={{paddingBottom: '25px'}}>
         <Navbar className="bg-body-tertiary">
           <Container>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/">
               <img
                 src={TmuLogo}
                 width="100"
@@ -37,7 +37,8 @@ function TopNavebar() {
             </Form>
 
             <Form className="d-flex">
-              <Button variant="outline-primary" onClick={() => setModalShow(true)}>Add Post</Button>
+              <Button variant="outline-primary" href="/ecom" className="m-2">Posts</Button>
+              <Button variant="outline-primary" className="m-2" onClick={() => setModalShow(true)}>Add Post</Button>
 
               <CreatePost 
                 show={modalShow}

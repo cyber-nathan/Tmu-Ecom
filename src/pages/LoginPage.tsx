@@ -2,7 +2,7 @@
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 //import InputGroup from 'react-bootstrap/InputGroup';
-import TmuLogo from'C:/Users/Nathan/Documents/Cps630Proj/Tmu-Ecom/src/picture/tmuLogo.png'; // local rn
+import TmuLogo from'../picture/tmuLogo.png'; // local rn
 //import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
