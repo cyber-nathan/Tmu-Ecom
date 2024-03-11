@@ -2,11 +2,21 @@
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 //import InputGroup from 'react-bootstrap/InputGroup';
-import TmuLogo from'C:/Users/Nathan/Documents/Cps630Proj/Tmu-Ecom/src/picture/tmuLogo.png'; // local rn
+import TmuLogo from'D:/0School/CPS630/Project/Tmu-Ecom/src/picture/tmuLogo.png'; // local rn
 //import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'; 
+import {auth} from '../../firebase/firebaseConfig';
+
+const provider = new GoogleAuthProvider();
+
+
 
 export default function LoginPage() {
+    const handleGoogle = async () => {
+      const provider = await new GoogleAuthProvider();
+      return signInWithPopup(auth, provider);
+    }
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Card style={{ width: '25%', height:'500px', justifyContent: 'center', alignItems: 'center' }}>
@@ -27,7 +37,7 @@ export default function LoginPage() {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password"  style={{ width: '100%'}}/>
               </Form.Group>
-              <Button variant="primary">LogIn</Button>{' '}
+              <Button variant="primary" onClick={handleGoogle}>LogIn</Button>{' '}
             </Form>
           </Card.Body>
         </Card>
