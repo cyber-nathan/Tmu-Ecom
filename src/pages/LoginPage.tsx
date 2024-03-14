@@ -9,8 +9,8 @@ import { auth, googleAuthProvider } from './firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function LoginPage() {
+    
     const navigate = useNavigate();
 
     const googleLogin = async () => {

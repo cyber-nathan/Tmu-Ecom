@@ -4,17 +4,36 @@ import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 //import Modal from 'react-bootstrap/Modal';
-import TmuLogo from'../../picture/tmuLogo.png'; // local rn
-import React, { useState} from 'react';
+import TmuLogo from '../../picture/tmuLogo.png'; // local rn
+import React, { useState } from 'react';
 import CreatePost from '../createPost/CreatePost';
-
+import { useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../pages/firebase';
 
 function TopNavebar() {
   const [modalShow, setModalShow] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user') ?? 'null');
+  const navigate = useNavigate();
+  //use this line to see what keys are there in the dictinoary
+  console.log(JSON.stringify(user));
+
+
+
+  const Logout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
-    <div> 
-      <div style={{paddingBottom: '25px'}}>
+    <div>
+      <div style={{ paddingBottom: '25px' }}>
         <Navbar className="bg-body-tertiary">
           <Container>
             <Navbar.Brand href="#home">
@@ -39,19 +58,29 @@ function TopNavebar() {
             <Form className="d-flex">
               <Button variant="outline-primary" onClick={() => setModalShow(true)}>Add Post</Button>
 
-              <CreatePost 
+              <CreatePost
                 show={modalShow}
                 onHide={() => setModalShow(false)}
               />
             </Form>
+            {user ? (
+              <div>
+                <p>{user["displayName"]}</p>
+                <button onClick={Logout} className='btnLogout'>Log Out</button>
+              </div>
+            ) : (
+              <p></p>
+            )}
+
+            {/*<p>{user["displayName"]}</p>*/}
+            {/*<button onClick={Logout} className='btnLogout'>Log Out</button>*/}
           </Container>
         </Navbar>
-      </div>    
+      </div>
 
     </div>
   );
 }
 
-  
-  export default TopNavebar
-  
+
+export default TopNavebar
