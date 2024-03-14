@@ -1,13 +1,27 @@
 import React, { useState} from 'react';
 //import CreatePost from '../createPost/CreatePost';
 import ProductCard from '../productCard/ProductCard';
-import { ITEM, ProdItem } from '../../interfaces';
+import { DocumentData, collection } from "firebase/firestore"; 
+import { db } from '../../pages/firebase.js';
+import { onSnapshot } from "firebase/firestore";
+import { useEffect } from 'react';
+
 
 
 function ProductDisplay() {
-    //  const [modalShow, setModalShow] = useState(false);
-      const [items, setItems] = useState<ProdItem[]>(ITEM);// This state will hold the data for ProductCard // what does useState<FormData[]>([]) do and for?
-    //  console.log("This is Items in prdDisplay", items) // this gets displayed twice for some reason
+  const [items, setItems] = useState<DocumentData[]>([]);
+  
+  // Fetch the posts from the database
+  useEffect(() => {
+    const getPosts = onSnapshot(collection(db, "Posts"), (snapshot) => {
+      setItems(snapshot.docs.map((doc) => doc.data())); // Set the items to the data from the database
+    }, (error) => {
+      console.error("Error listening to posts:", error);
+    });
+    return () => getPosts();
+  }, []);
+  
+  
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
     {[...items].reverse().map((item, index) => (
