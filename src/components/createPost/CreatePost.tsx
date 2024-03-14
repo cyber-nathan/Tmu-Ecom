@@ -7,9 +7,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { ProdItem, ITEM } from '../../interfaces';
-import { db } from '../../pages/firebase.js';
-import { collection, addDoc } from "firebase/firestore"; 
+import { ProdItem } from '../../interfaces';
+import { auth, db, storage } from '../../pages/firebase.js';
+import { collection, addDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 import './CreatePost.css';
 
 
@@ -27,26 +29,57 @@ interface Props {
     const [description, setDescription] = useState('');
     const [owner, setOwner] = useState('');
     const [picture, setPicture] = useState('');
+    const [pictureUpload, setPictureUpload] = useState<FileList | null>(null);
 
-    const handleSubmit = () => {
-      const newItem: ProdItem = {
-        id: new Date().getTime(), // Simple way to generate unique IDs
-        picture,
-        prodName,
-        price: Number(price),
-        owner,
-        description,
-      };
-  
-      //add to firebase
-      try {
-        addDoc(collection(db, "Posts"), newItem);
-      } catch (e) {
-        console.error("Error adding document: ", e);
+    const resetState = () => {
+      setProdName('');
+      setPrice('');
+      setDescription('');
+      setOwner('');
+      setPicture('');
+      setPictureUpload(null);
+    };
+
+    //Validate data client side, there are also rules in firebase in case this fails
+    const data_validation = () => {
+      if (prodName === '' || price === '' || description === '') { //Or other logic if needed
+        //TODO: Add alert to tell user to fill in all fields
+        console.log("Missing Fields");
+        return false;
       }
-      //props.onUpdateDatabase(newItem); // make it so that the New item gets pushed to the ITEM ARRAY 
-      ITEM.push(newItem);
-      console.log("New item In ITEM", ITEM)
+      return true;
+    }
+
+    const handleSubmit = async () => {
+      // Firebase upload
+      if (data_validation() && pictureUpload) { //pictureUpload seperate so IDE dont throw error about pictureUpload being null
+        try {
+          // Upload picture to fireebase storage
+          const file = pictureUpload[0];
+          const storageRef = ref(storage, `images/${uuidv4()}`); //generate unique id for the picture
+          await uploadBytes(storageRef, file);
+          const url = await getDownloadURL(storageRef); // Get the URL to the picture
+                
+          const newItem: ProdItem = {
+            id: new Date().getTime(), // Simple way to generate unique IDs
+            picture: url,
+            prodName,
+            price: Number(price),
+            owner: auth.currentUser?.uid,
+            description,
+          };
+      
+          //add item to firebase database
+          try {
+            await addDoc(collection(db, "Posts"), newItem);
+            resetState();
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+        } catch (error) {
+          console.error("Error uploading picture: ", error);
+        }
+      }
       props.onHide(); // Hide modal after submission
     };
 
@@ -68,7 +101,7 @@ interface Props {
             <Row className="mb-3">
               <Col xs={6}>
                 <div className="upload-slot">
-                  <input type="file" onChange={(e) => setPicture(e.target.value)} className="form-control" />
+                  <input type="file" onChange={(e) => {setPictureUpload(e.target.files);}} className="form-control" />
                   Upload File 1
                 </div>
               </Col>
