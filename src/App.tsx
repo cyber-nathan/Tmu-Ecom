@@ -9,20 +9,23 @@ import TopNavebar from './components/navbar/Navebar';
 import LoginPage from './pages/LoginPage';
 import ProductDisplay from './components/productDisplay/ProductDisplay';
 // import ProductCard from './components/productCard/ProductCard';
-
+import Protected from './components/Protected';
 
 function App() {
 
   return (
     <BrowserRouter>
-    <TopNavebar />
+      <TopNavebar />
       <Routes>
         {/* Define the route for the Home component */}
         <Route path="/" element={<LoginPage />} />
-        
-        {/* Define the route for the Blog component */}
-        <Route path="/ecom" element={<ProductDisplay /> } />
-        
+        {/* Will jump to login page if user has not login */}
+        <Route path="/" element={<Protected />}> 
+          {/* Define the route for the Blog component */}
+          <Route path="/ecom" element={<ProductDisplay />} />
+        </Route>
+
+
         {/* Define the route for the NewPost component */}
         {/* <Route path="/new-post" element={<NewPost />} /> */}
       </Routes>
