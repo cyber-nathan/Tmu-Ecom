@@ -12,13 +12,20 @@ function ProductDisplay() {
   const [items, setItems] = useState<DocumentData[]>([]);
   
   // Fetch the posts from the database
-  useEffect(() => {
-    const getPosts = onSnapshot(collection(db, "Posts"), (snapshot) => {
+  const getAllPosts = () => {
+    const getallPosts = onSnapshot(collection(db, "Posts"), (snapshot) => {
       setItems(snapshot.docs.map((doc) => doc.data())); // Set the items to the data from the database
     }, (error) => {
       console.error("Error listening to posts:", error);
     });
-    return () => getPosts();
+    
+    return getallPosts;
+  };
+
+  useEffect(() => {
+    const action = getAllPosts(); //only get all posts for now, need to look further to see how to get search & filter working
+    
+    return () => action();
   }, []);
   
   
