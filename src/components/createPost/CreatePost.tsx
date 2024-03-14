@@ -8,6 +8,8 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { ProdItem, ITEM } from '../../interfaces';
+import { db } from '../../pages/firebase.js';
+import { collection, addDoc } from "firebase/firestore"; 
 import './CreatePost.css';
 
 
@@ -36,6 +38,12 @@ interface Props {
         description,
       };
   
+      //add to firebase
+      try {
+        addDoc(collection(db, "Posts"), newItem);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
       //props.onUpdateDatabase(newItem); // make it so that the New item gets pushed to the ITEM ARRAY 
       ITEM.push(newItem);
       console.log("New item In ITEM", ITEM)
