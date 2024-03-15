@@ -18,7 +18,10 @@ function ProductCard(props: any) {
         </div>
         <div className="col-md-8">
           <Card.Body>
-            <Card.Title>{props.item.prodName}</Card.Title>
+            <Card.Title> 
+              <span className={`badge bg-${props.item.category.toLowerCase()}`}>{props.item.category}</span> 
+              {props.item.prodName}
+            </Card.Title>
             <ListGroup className="list-group-flush">
               <ListGroup.Item>Price: ${props.item.price}</ListGroup.Item>
               <ListGroup.Item>
