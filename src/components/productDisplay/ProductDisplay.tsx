@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import { useState} from 'react';
 //import CreatePost from '../createPost/CreatePost';
 import ProductCard from '../productCard/ProductCard';
 import { DocumentData, collection } from "firebase/firestore"; 

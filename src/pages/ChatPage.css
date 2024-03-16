@@ -1,0 +1,53 @@
+.chat-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     /* Use full height to center vertically */
+    padding: 20px;
+  }
+  
+  .chat-card {
+    width: 100%;
+    max-width: 900px; /* Adjust based on your preference */
+    margin: auto; /* Center the card vertically */
+  }
+  
+  .chat-header {
+    background-color: #007bff; 
+    color: white;
+  }
+  
+  .chat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 500px; /* Adjust based on your preference */
+  }
+  
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto; /* Enable scrolling for overflow */
+    padding: 10px;
+    background-color: #f8f9fa; /* Light background for the chat area */
+    border: 1px solid #dee2e6; /* Slight border for the chat area */
+    margin-bottom: 10px;
+  }
+  
+  .message-form {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .input-field {
+    flex: 1;
+  }
+
+  .chat-sidebar {
+  flex: 0 0 200px; /* Sidebar width */
+  overflow-y: auto; /* Enable vertical scrolling for the sidebar */
+  border-right: 1px solid #dee2e6; /* Add a border to separate the sidebar */
+  /* Full height */
+}
+  
+
+  

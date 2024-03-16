@@ -4,8 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 //import Modal from 'react-bootstrap/Modal';
-import TmuLogo from '../../picture/tmuLogo.png'; // local rn
-import React, { useState } from 'react';
+import TmuLogo from'../../picture/tmuLogo.png'; // local rn
+import  { useState} from 'react';
 import CreatePost from '../createPost/CreatePost';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
