@@ -1,6 +1,7 @@
 //import React from 'react'
 import  { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -30,6 +31,7 @@ interface Props {
     const [owner, setOwner] = useState('');
     const [picture, setPicture] = useState('');
     const [pictureUpload, setPictureUpload] = useState<FileList | null>(null);
+    const [category, setCategory] = useState<'WTS' | 'WTB' | 'Service'>('WTS');
 
     const resetState = () => {
       setProdName('');
@@ -38,6 +40,7 @@ interface Props {
       setOwner('');
       setPicture('');
       setPictureUpload(null);
+      setCategory('WTB');
     };
 
     //Validate data client side, there are also rules in firebase in case this fails
@@ -67,6 +70,7 @@ interface Props {
             price: Number(price),
             owner: auth.currentUser?.uid,
             description,
+            category
           };
       
           //add item to firebase database
@@ -95,6 +99,19 @@ interface Props {
             Upload Item
           </Modal.Title>
         </Modal.Header>
+        <Modal.Body className="grid-example">
+          <Container>
+            <Row>
+              <Col xs={6}>
+              <ButtonGroup>
+                <Button variant={category === 'WTS' ? 'primary' : 'secondary'} onClick={() => setCategory('WTS')}>WTS</Button>
+                <Button variant={category === 'WTB' ? 'primary' : 'secondary'} onClick={() => setCategory('WTB')}>WTB</Button>
+                <Button variant={category === 'Service' ? 'primary' : 'secondary'} onClick={() => setCategory('Service')}>Service</Button>
+              </ButtonGroup>
+              </Col>
+            </Row>
+          </Container>
+        </Modal.Body>
         <Modal.Body className="grid-example">
           <Container>
             {/* First row of 2 columns */}

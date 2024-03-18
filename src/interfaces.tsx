@@ -6,6 +6,7 @@ export interface ProdItem {
     price: number;
     owner: string;
     description: string;
+    category: string;
   }
 
   export let ITEM: ProdItem[] = [
@@ -14,8 +15,8 @@ export interface ProdItem {
       prodName: "prodName1",
       price: 100,
       owner: "Owner1",
-      description: "this is where the description will go"
-  
+      description: "this is where the description will go",
+      category: "WTB"
     },
   
     {id: 1,
@@ -23,8 +24,8 @@ export interface ProdItem {
       prodName: "prodName2",
       price: 150,
       owner: "Owner2",
-      description: "this is where the description will go"
-  
+      description: "this is where the description will go",
+      category: "WTS"
     },
   
     {id: 2,
@@ -32,8 +33,8 @@ export interface ProdItem {
       prodName: "prodName3",
       price: 50,
       owner: "Owner3",
-      description: "this is where the description will go"
-  
+      description: "this is where the description will go",
+      category: "Service"
     },
   
     {id: 3,
@@ -41,7 +42,7 @@ export interface ProdItem {
       prodName: "prodName4",
       price: 200,
       owner: "Owner4",
-      description: "this is where the description will go"
-  
+      description: "this is where the description will go",
+      category: "WTB"
     }
 ]
