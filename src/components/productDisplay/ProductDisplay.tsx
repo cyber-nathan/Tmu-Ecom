@@ -1,21 +1,29 @@
-import { useState} from 'react';
+import { useState } from 'react';
 //import CreatePost from '../createPost/CreatePost';
 import ProductCard from '../productCard/ProductCard';
 import { DocumentData, collection, query, orderBy, onSnapshot} from "firebase/firestore"; 
 import { db } from '../../pages/firebase.js';
 import { useEffect } from 'react';
+import React from 'react';
+import { AppContext } from '../../AppContext';
 
 
 
 function ProductDisplay() {
   const [items, setItems] = useState<DocumentData[]>([]);
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars*/ //disable linting for setSearchString never used it wont be used here
+  const { searchString, setSearchString } = React.useContext(AppContext); //shared state, for search bar to communicate with product display
   
-  // Fetch the posts from the database
+  // Fetch the posts from the database and update the state
   const getAllPosts = () => {
     const postsRef = collection(db, "Posts");
     const q = query(postsRef, orderBy("id", "asc")); //Get all posts by recency (id is the timestamp of the post)
     const getallPosts = onSnapshot(q, (snapshot) => {
-      setItems(snapshot.docs.map((doc) => doc.data())); // Set the items to the data from the database
+      let result: DocumentData[] = snapshot.docs.map((doc) => doc.data());
+      if (searchString !== '') {
+        result = result.filter((item) => item.prodName.toLowerCase().includes(searchString.toLowerCase())); //filter the posts by the search string
+      }
+      setItems(result);
     }, (error) => {
       console.error("Error listening to posts:", error);
     });
@@ -24,10 +32,10 @@ function ProductDisplay() {
   };
 
   useEffect(() => {
-    const action = getAllPosts(); //only get all posts for now, need to look further to see how to get search & filter working
+    const action = getAllPosts(); //Update post list
     
     return () => action();
-  }, []);
+  }, [searchString]);
   
   
   return (
