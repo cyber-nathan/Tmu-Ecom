@@ -1,9 +1,8 @@
 import { useState} from 'react';
 //import CreatePost from '../createPost/CreatePost';
 import ProductCard from '../productCard/ProductCard';
-import { DocumentData, collection } from "firebase/firestore"; 
+import { DocumentData, collection, query, orderBy, onSnapshot} from "firebase/firestore"; 
 import { db } from '../../pages/firebase.js';
-import { onSnapshot } from "firebase/firestore";
 import { useEffect } from 'react';
 
 
@@ -13,7 +12,9 @@ function ProductDisplay() {
   
   // Fetch the posts from the database
   const getAllPosts = () => {
-    const getallPosts = onSnapshot(collection(db, "Posts"), (snapshot) => {
+    const postsRef = collection(db, "Posts");
+    const q = query(postsRef, orderBy("id", "asc")); //Get all posts by recency (id is the timestamp of the post)
+    const getallPosts = onSnapshot(q, (snapshot) => {
       setItems(snapshot.docs.map((doc) => doc.data())); // Set the items to the data from the database
     }, (error) => {
       console.error("Error listening to posts:", error);

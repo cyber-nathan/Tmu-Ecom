@@ -28,8 +28,6 @@ interface Props {
     const [prodName, setProdName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
-    const [owner, setOwner] = useState('');
-    const [picture, setPicture] = useState('');
     const [pictureUpload, setPictureUpload] = useState<FileList | null>(null);
     const [category, setCategory] = useState<'WTS' | 'WTB' | 'Service'>('WTS');
 
@@ -37,8 +35,6 @@ interface Props {
       setProdName('');
       setPrice('');
       setDescription('');
-      setOwner('');
-      setPicture('');
       setPictureUpload(null);
       setCategory('WTB');
     };
