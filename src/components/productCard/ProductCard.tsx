@@ -19,7 +19,7 @@ function ProductCard(props: any) {
         <div className="col-md-8">
           <Card.Body>
             <Card.Title> 
-              <span className={`badge bg-${props.item.category.toLowerCase()}`}>{props.item.category}</span> 
+              <span className={`badge bg-${props.item.category.toLowerCase().replace(/\s/g, '')}`}>{props.item.category}</span>
               {props.item.prodName}
             </Card.Title>
             <ListGroup className="list-group-flush">

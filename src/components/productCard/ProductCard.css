@@ -6,14 +6,14 @@
   margin-right: 5px;
 }
 
-.badge.bg-wtb {
+.badge.bg-itemswanted {
   background-color: rgb(49, 118, 207); /* change to desired color */
 }
 
-.badge.bg-wts {
+.badge.bg-itemsforsale {
   background-color: rgb(64, 206, 64); /* change to desired color */
 }
 
-.badge.bg-service {
+.badge.bg-academicservices {
   background-color: rgb(219, 150, 71); /* change to desired color */
 }
