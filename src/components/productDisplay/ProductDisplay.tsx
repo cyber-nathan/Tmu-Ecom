@@ -5,6 +5,7 @@ import { DocumentData, collection } from "firebase/firestore";
 import { db } from '../../pages/firebase.js';
 import { onSnapshot } from "firebase/firestore";
 import { useEffect } from 'react';
+import TopNavebar from '../navbar/Navebar.js';
 
 
 
@@ -30,12 +31,13 @@ function ProductDisplay() {
   
   
   return (
+    <><TopNavebar />
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    {[...items].reverse().map((item, index) => (
+      {[...items].reverse().map((item, index) => (
         // Render a ProductCard for each item, passing the item as a prop
         <ProductCard key={index} item={item} />
-    ))}
-</div>
+      ))}
+    </div></>
   )
 }
 // new item only gets displayed when i reload this component dont know why

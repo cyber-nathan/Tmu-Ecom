@@ -10,6 +10,7 @@ import CreatePost from '../createPost/CreatePost';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../pages/firebase';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function TopNavebar() {
   const [modalShow, setModalShow] = useState(false);
@@ -62,15 +63,30 @@ function TopNavebar() {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
               />
+              
             </Form>
-            {user ? (
+
+
+            
+
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              title={user["displayName"]}
+              menuVariant="light"
+            >
+              <NavDropdown.Item >Messages</NavDropdown.Item>
+              <NavDropdown.Item onClick={Logout}>Log Out</NavDropdown.Item>
+              
+            </NavDropdown>
+          
+            {/* {user ? (
               <div>
                 <p>{user["displayName"]}</p>
                 <button onClick={Logout} className='btnLogout'>Log Out</button>
               </div>
             ) : (
               <p></p>
-            )}
+            )} */}
 
             {/*<p>{user["displayName"]}</p>*/}
             {/*<button onClick={Logout} className='btnLogout'>Log Out</button>*/}

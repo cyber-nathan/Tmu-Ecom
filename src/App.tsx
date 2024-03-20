@@ -2,10 +2,10 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import TopNavebar from './components/navbar/Navebar';
+//import TopNavebar from './components/navbar/Navebar';
 import LoginPage from './pages/LoginPage';
 import ProductDisplay from './components/productDisplay/ProductDisplay';
 import ChatPage from './pages/ChatPage';
@@ -16,7 +16,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <TopNavebar />
       <Routes>
         {/* Define the route for the Home component */}
         <Route path="/" element={<LoginPage />} />
