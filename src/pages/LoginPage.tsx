@@ -47,12 +47,8 @@ export default function LoginPage() {
             <Form>
               <script src="firebase.js" defer type='module' ></script>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="email" placeholder="Torontomu username"  style={{ width: '100%'}}/>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password"  style={{ width: '100%'}}/>
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" placeholder="Torontomu Email"  style={{ width: '100%'}}/>
               </Form.Group>
               <Button variant="primary" onClick={googleLogin }>LogIn</Button>{' '}
             </Form>

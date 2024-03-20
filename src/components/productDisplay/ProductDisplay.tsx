@@ -7,6 +7,7 @@ import ProductCard from '../productCard/ProductCard';
 import { DocumentData, collection, query, orderBy, onSnapshot} from "firebase/firestore"; 
 import { db } from '../../pages/firebase.js';
 import { useEffect } from 'react';
+import TopNavebar from '../navbar/Navebar.js';
 import React from 'react';
 import { AppContext } from '../../AppContext';
 import { Dropdown } from 'react-bootstrap';
@@ -73,6 +74,7 @@ function ProductDisplay() {
   
   //Temporary style for navbar, might need change for mobile
   return (
+    <><TopNavebar />
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Navbar style={{ width: '1000px' }} className="bg-light justify-content-between"> 
 
@@ -100,8 +102,8 @@ function ProductDisplay() {
     {[...items].reverse().map((item, index) => (
         // Render a ProductCard for each item, passing the item as a prop
         <ProductCard key={index} item={item} />
-    ))}
-</div>
+      ))}
+    </div></>
   )
 }
 // new item only gets displayed when i reload this component dont know why
