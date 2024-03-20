@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
@@ -10,10 +11,15 @@ import CreatePost from '../createPost/CreatePost';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../pages/firebase';
+import { AppContext } from '../../AppContext';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+
 
 function TopNavebar() {
   const [modalShow, setModalShow] = useState(false);
+  const [temp_searchString, setTemp_searchString] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { searchString, setSearchString } = React.useContext(AppContext); //shared state, for search bar to communicate with product display
   const user = JSON.parse(localStorage.getItem('user') ?? 'null');
   const navigate = useNavigate();
   //use this line to see what keys are there in the dictinoary
@@ -52,8 +58,9 @@ function TopNavebar() {
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
+                onChange={(e) => setTemp_searchString(e.target.value)}
               />
-              <Button variant="outline-primary">Search</Button>
+              <Button variant="outline-primary" onClick={() => setSearchString(temp_searchString)}>Search</Button>
             </Form>
 
             <Form className="d-flex">

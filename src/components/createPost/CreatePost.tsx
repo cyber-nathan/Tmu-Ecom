@@ -28,19 +28,15 @@ interface Props {
     const [prodName, setProdName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
-    const [owner, setOwner] = useState('');
-    const [picture, setPicture] = useState('');
     const [pictureUpload, setPictureUpload] = useState<FileList | null>(null);
-    const [category, setCategory] = useState<'WTS' | 'WTB' | 'Service'>('WTS');
+    const [category, setCategory] = useState<'Items for Sale' | 'Items Wanted' | 'Academic Services'>('Items for Sale');
 
     const resetState = () => {
       setProdName('');
       setPrice('');
       setDescription('');
-      setOwner('');
-      setPicture('');
       setPictureUpload(null);
-      setCategory('WTB');
+      setCategory('Items Wanted');
     };
 
     //Validate data client side, there are also rules in firebase in case this fails
@@ -104,9 +100,9 @@ interface Props {
             <Row>
               <Col xs={6}>
               <ButtonGroup>
-                <Button variant={category === 'WTS' ? 'primary' : 'secondary'} onClick={() => setCategory('WTS')}>WTS</Button>
-                <Button variant={category === 'WTB' ? 'primary' : 'secondary'} onClick={() => setCategory('WTB')}>WTB</Button>
-                <Button variant={category === 'Service' ? 'primary' : 'secondary'} onClick={() => setCategory('Service')}>Service</Button>
+                <Button variant={category === 'Items for Sale' ? 'primary' : 'secondary'} onClick={() => setCategory('Items for Sale')}>Items for Sale</Button>
+                <Button variant={category === 'Items Wanted' ? 'primary' : 'secondary'} onClick={() => setCategory('Items Wanted')}>Items Wanted</Button>
+                <Button variant={category === 'Academic Services' ? 'primary' : 'secondary'} onClick={() => setCategory('Academic Services')}>Academic Services</Button>
               </ButtonGroup>
               </Col>
             </Row>
