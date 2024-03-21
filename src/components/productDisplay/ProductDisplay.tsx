@@ -1,6 +1,5 @@
 import { useState } from 'react';
 //import CreatePost from '../createPost/CreatePost';
-import { Navbar } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ProductCard from '../productCard/ProductCard';
@@ -10,7 +9,7 @@ import { useEffect } from 'react';
 import TopNavebar from '../navbar/Navebar.js';
 import React from 'react';
 import { AppContext } from '../../AppContext';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Navbar } from 'react-bootstrap';
 
 
 function ProductDisplay() {
@@ -27,21 +26,31 @@ function ProductDisplay() {
   }, []);
   
   useEffect(() => {
+    let tempItems = [...masterItems];
     if (searchString !== '') {
-      setItems(masterItems.filter((item) => item.prodName.toLowerCase().includes(searchString.toLowerCase()))); //filter the posts by the search string
-    } else {
-      setItems(masterItems);
-    }
-  }, [searchString, masterItems]);
-
-  useEffect(() => {
-    setQuerySort('Recency');
+      tempItems = tempItems.filter((item) => item.prodName.toLowerCase().includes(searchString.toLowerCase())); //filter the posts by the search string
+    } 
     if (queryCategory !== 'Any') {
-      setItems(masterItems.filter((item) => item.category === queryCategory)); //filter the posts by the search string
-    } else {
-      setItems(masterItems);
+      tempItems = tempItems.filter((item) => item.category === queryCategory); //filter the posts by the search string
     }
-  }, [queryCategory, masterItems]);
+    switch (querySort) {
+      case 'Recency':
+        tempItems = tempItems.sort((a, b) => a.id - b.id);
+        break;
+      case 'Price: Low to High':
+        tempItems = tempItems.sort((a, b) => b.price - a.price);
+        break;
+      case 'Price: High to Low':
+        tempItems = tempItems.sort((a, b) => a.price - b.price);
+        break;
+      case 'Alphabetical':
+        tempItems = tempItems.sort((a, b) => b.prodName.localeCompare(a.prodName));
+        break;
+      default:
+        break;
+    }
+    setItems(tempItems);
+  }, [searchString, queryCategory, querySort, masterItems]);
 
     // Fetch the posts from the database and update the state
     const getAllPosts = () => {
@@ -58,18 +67,6 @@ function ProductDisplay() {
       });
       
       return getallPosts;
-    };
-  
-    const SortPosts = (sortType: string) => {
-      if (sortType === 'Recency') {
-        setItems([...items].sort((a, b) => a.id - b.id));
-      } else if (sortType === 'Price: Low to High') {
-        setItems([...items].sort((a, b) => b.price - a.price));
-      } else if (sortType === 'Price: High to Low') {
-        setItems([...items].sort((a, b) => a.price - b.price));
-      } else if (sortType === 'Alphabetical') {
-        setItems([...items].sort((a, b) => b.prodName.localeCompare(a.prodName)));
-      }
     };
   
   //Temporary style for navbar, might need change for mobile
@@ -91,10 +88,10 @@ function ProductDisplay() {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => {setQuerySort('Recency'); SortPosts('Recency');}}>Recency</Dropdown.Item>
-            <Dropdown.Item onClick={() => {setQuerySort('Price: Low to High'); SortPosts('Price: Low to High');}}>Price: Low to High</Dropdown.Item>
-            <Dropdown.Item onClick={() => {setQuerySort('Price: High to Low'); SortPosts('Price: High to Low');}}>Price: High to Low</Dropdown.Item>
-            <Dropdown.Item onClick={() => {setQuerySort('Alphabetical'); SortPosts('Alphabetical');}}>Alphabetical</Dropdown.Item>
+            <Dropdown.Item onClick={() => setQuerySort('Recency')}>Recency</Dropdown.Item>
+            <Dropdown.Item onClick={() => setQuerySort('Price: Low to High')}>Price: Low to High</Dropdown.Item>
+            <Dropdown.Item onClick={() => setQuerySort('Price: High to Low')}>Price: High to Low</Dropdown.Item>
+            <Dropdown.Item onClick={() => setQuerySort('Alphabetical')}>Alphabetical</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         
