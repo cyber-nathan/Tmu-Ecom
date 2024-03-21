@@ -58,7 +58,12 @@ function TopNavebar() {
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
-                onChange={(e) => setTemp_searchString(e.target.value)}
+                onChange={(e) => {
+                  setTemp_searchString(e.target.value);
+                  if (e.target.value === '') {
+                    setSearchString('');
+                  }
+                }}
               />
               <Button variant="outline-primary" onClick={() => setSearchString(temp_searchString)}>Search</Button>
             </Form>
