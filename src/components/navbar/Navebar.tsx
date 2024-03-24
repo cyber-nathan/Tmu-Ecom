@@ -23,7 +23,7 @@ function TopNavebar() {
   const user = JSON.parse(localStorage.getItem('user') ?? 'null');
   const navigate = useNavigate();
   //use this line to see what keys are there in the dictinoary
-  console.log(JSON.stringify(user));
+  //console.log(JSON.stringify(user));
 
 
 
