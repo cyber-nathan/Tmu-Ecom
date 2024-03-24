@@ -10,6 +10,8 @@ import TopNavebar from '../navbar/Navebar.js';
 import React from 'react';
 import { AppContext } from '../../AppContext';
 import { Dropdown, Navbar } from 'react-bootstrap';
+import { auth } from '../../pages/firebase';
+import { getIdTokenResult } from 'firebase/auth';
 
 
 function ProductDisplay() {
@@ -24,7 +26,25 @@ function ProductDisplay() {
     const action = getAllPosts(); //Update post list
     return () => action();
   }, []);
+
   
+  
+  //Use this to check if user is admin
+  useEffect(() => {
+    const fetchClaims = async () => {
+      const idTokenResult = await getIdTokenResult(auth.currentUser);
+      const claims = idTokenResult.claims;
+      if (claims.admin) {
+        //Style changes for admin or something
+      }
+    }
+
+    if (auth.currentUser) {
+      fetchClaims();
+    }
+  }, []);
+  
+
   useEffect(() => {
     let tempItems = [...masterItems];
     if (searchString !== '') {

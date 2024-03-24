@@ -6,7 +6,7 @@ import TmuLogo from'../picture/tmuLogo.png'; // local rn
 //import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { auth, googleAuthProvider } from './firebase'; 
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, getIdTokenResult } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
@@ -16,11 +16,14 @@ export default function LoginPage() {
     const googleLogin = async () => {
       try{
         const result = await signInWithPopup(auth, googleAuthProvider);
-        console.log(result);
+        //console.log(result);
         localStorage.setItem('token', (result.user as any).accessToken);
         localStorage.setItem('user',JSON.stringify(result.user));
+        //commented block below is to check if user is a TMU email client side, disabled currently to allow gmail admin account
+        /*
         const email = JSON.stringify(result.user["email"])//check email
         const splitEmail = email.split("@")[1];
+        
         if (splitEmail == 'torontomu.ca"')
         {          
           navigate("/ecom");
@@ -29,6 +32,21 @@ export default function LoginPage() {
           console.log("email:" + splitEmail);
           alert("Not a TMU email!");
         }
+        */
+       
+       //Checking admin status and route accordingly
+       //For checking Admin status in other pages see useeffect example in productDisplay.tsx
+        const idTokenResult = await getIdTokenResult(auth.currentUser);
+        const claims = idTokenResult.claims;
+        if (claims.admin) {
+          navigate("/ecom"); //Or route to admin page
+          console.log("Logged in as admin"); //debug 
+        }
+        else{
+          navigate("/ecom");
+          console.log("Logged in as user");
+        }
+
       }catch(error){
         console.error(error);
       }
