@@ -1,0 +1,19 @@
+.hover-effect:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add your desired shadow effect */
+  }
+
+.badge {
+  margin-right: 5px;
+}
+
+.badge.bg-itemswanted {
+  background-color: rgb(49, 118, 207); /* change to desired color */
+}
+
+.badge.bg-itemsforsale {
+  background-color: rgb(64, 206, 64); /* change to desired color */
+}
+
+.badge.bg-academicservices {
+  background-color: rgb(219, 150, 71); /* change to desired color */
+}

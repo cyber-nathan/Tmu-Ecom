@@ -13,7 +13,6 @@ import { Dropdown, Navbar } from 'react-bootstrap';
 import { auth } from '../../pages/firebase';
 import { getIdTokenResult } from 'firebase/auth';
 
-
 function ProductDisplay() {
   const [masterItems, setMasterItems] = useState<DocumentData[]>([]); //Original fetched items. kept separate from items to be displayed to avoid re-fetching
   const [items, setItems] = useState<DocumentData[]>([]); //Items to be displayed(after filtering and sorting)
@@ -21,6 +20,8 @@ function ProductDisplay() {
   const { searchString, setSearchString } = React.useContext(AppContext); //shared state, for search bar to communicate with product display
   const [ queryCategory, setQueryCategory ] = useState<'Items for Sale' | 'Items Wanted' | 'Academic Services' | 'Any'>('Any');
   const [querySort, setQuerySort] = useState<'Recency' | 'Price: Low to High' | 'Price: High to Low' | 'Alphabetical'>('Recency');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     const action = getAllPosts(); //Update post list
@@ -34,9 +35,7 @@ function ProductDisplay() {
     const fetchClaims = async () => {
       const idTokenResult = await getIdTokenResult(auth.currentUser);
       const claims = idTokenResult.claims;
-      if (claims.admin) {
-        //Style changes for admin or something
-      }
+      setIsAdmin(!!claims.admin); // Set isAdmin state
     }
 
     if (auth.currentUser) {
@@ -118,7 +117,7 @@ function ProductDisplay() {
       </Navbar>
     {[...items].reverse().map((item, index) => (
         // Render a ProductCard for each item, passing the item as a prop
-        <ProductCard key={index} item={item} />
+        <ProductCard key={index} item={item} isAdmin={isAdmin} />
       ))}
     </div></>
   )
