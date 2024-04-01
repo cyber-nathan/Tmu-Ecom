@@ -5,3 +5,5 @@ export const AppContext = React.createContext({
     searchString: '',
     setSearchString: (searchString: string) => {}
   });
+
+  

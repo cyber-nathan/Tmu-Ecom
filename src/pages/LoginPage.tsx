@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/Button';
 import { auth, googleAuthProvider } from './firebase'; 
 import { signInWithPopup, getIdTokenResult } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { doc, setDoc } from "firebase/firestore"; 
+import {db} from "./firebase"
 
 export default function LoginPage() {
     
@@ -16,7 +18,7 @@ export default function LoginPage() {
     const googleLogin = async () => {
       try{
         const result = await signInWithPopup(auth, googleAuthProvider);
-        //console.log(result);
+        console.log(result);
         localStorage.setItem('token', (result.user as any).accessToken);
         localStorage.setItem('user',JSON.stringify(result.user));
         //commented block below is to check if user is a TMU email client side, disabled currently to allow gmail admin account
@@ -34,6 +36,20 @@ export default function LoginPage() {
         }
         */
        
+        await setDoc(doc(db, "chatUsers", result.user.uid),{
+          uid: result.user.uid,
+          displayName: result.user.displayName,
+          email: result.user.email
+        })
+
+        await setDoc(doc(db, "chats", result.user.uid),
+        {
+
+
+          
+        })
+
+
        //Checking admin status and route accordingly
        //For checking Admin status in other pages see useeffect example in productDisplay.tsx
         const idTokenResult = await getIdTokenResult(auth.currentUser);
@@ -47,10 +63,15 @@ export default function LoginPage() {
           console.log("Logged in as user");
         }
 
+        
+
       }catch(error){
         console.error(error);
       }
     }
+
+    
+
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>        
         <Card style={{ width: '25%', height:'500px', justifyContent: 'center', alignItems: 'center' }}>
