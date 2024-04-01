@@ -4,6 +4,8 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import './ProductCard.css'; // Import your CSS file
 import { useNavigate } from 'react-router-dom';
+import DeletePost from '../deletePost/DeletePost';
+import { useState } from 'react';
 
 // make image fit properly in the card
 
@@ -12,9 +14,13 @@ function ProductCard(props: any) {
   //console.log("this is img", props.item.picture);
     const navigate = useNavigate();
 
+    const { item, isAdmin } = props;
+
     const handleButtonClick = () => {
       navigate("/chat");
     };
+
+    const [modalShow, setModalShow] = useState(false);
 
 
   return (
@@ -40,8 +46,16 @@ function ProductCard(props: any) {
             </ListGroup>
           </Card.Body>
           <Card.Body>
-            <Button variant="primary" onClick={handleButtonClick}>Send Message</Button>{' '}
-            {/* open up dialog which allows the user to type a message to the owner */}
+            {isAdmin ? (
+              <Button variant="warning" onClick={() => setModalShow(true)}>Manage</Button>
+            ) : (
+              <Button variant="primary" onClick={handleButtonClick}>Send Message</Button>
+            )}
+
+              <DeletePost
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              />
           </Card.Body>
         </div>
       </div>
