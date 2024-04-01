@@ -118,7 +118,9 @@
           background-color: transparent;
           border: 1px solid lightgray;
           border-radius: 5px;
-          color: white;
+          color: black;
+          padding: 5px;
+          
 
           &::placeholder{
               color: grey;

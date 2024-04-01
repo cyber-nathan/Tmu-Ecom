@@ -9,8 +9,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "./ChatPage.css"; // Assuming you create this CSS file for styling
 import Sidebar from './Sidebar';
+import {getCurrentUser} from "./auth";
 
 function ChatPage() {
+
+  const user = getCurrentUser();
+
   return (
     <div className="chat-page">
       <Card className="chat-card">
@@ -41,7 +45,10 @@ function ChatPage() {
         <Col sm={8}>
 
         <div style={{paddingTop: '15px', paddingLeft: '15px'}} >
-          <h2>Person1</h2>
+          <h2>Person 1</h2>
+          
+          
+          
         </div >
 
 
@@ -56,7 +63,7 @@ function ChatPage() {
 
 
           <div className="chat-input">
-            
+
             <Form className="message-form">
               <Form.Control
                 type="text"
