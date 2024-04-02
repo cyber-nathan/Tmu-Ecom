@@ -1,9 +1,6 @@
 import React from 'react'
 
-export const Message = ({message}) => {
-
-  console.log(message)
-  
+export const Message = () => {
   return (
     <div className='message owner'>
         <div className='messageContent'>
