@@ -1,37 +1,37 @@
 import React from 'react'
-import { doc, onSnapshot } from "firebase/firestore";
-import { useState, useEffect } from 'react'
-import { db } from './firebase';
 import { getCurrentUser } from './auth';
+import {getChat} from "./chatContext"
 
 export const Chats = () => {
 
     const currentUser = getCurrentUser()
-    const [chats, setChats] = useState([])
+    const chats = getChat();
+    console.log(Object.entries(chats))
 
 
-    useEffect(() => {
-        const getChats = () => {
-            const unsub = onSnapshot(doc(db, "chats", currentUser.uid), (doc) => {
-                setChats(doc.data());
-            });
+    const handleChatClick = (chatID, displayName, userID) => {
+
+        localStorage.setItem('selectedChatId', chatID);
+        localStorage.setItem('selectedChatDisplayName', displayName);
+        localStorage.setItem('selectedUserID', userID )
+       
+        console.log(localStorage.getItem('selectedChatId'))
+        console.log(localStorage.getItem('selectedChatDisplayName'))
+        console.log(localStorage.getItem('selectedUserID'))
+
+        location.reload();
         
-          return () => {
-            unsub();
-          }
-        }
-        currentUser.uid && getChats();
-    }, [currentUser.uid])
-    
 
-
+    }
   return (
     <div className='chats'>
-        {Object.entries(chats)?.map((chat)=>(
-            <div className='userChat' key={chat[0]}>
+        {Object.entries(chats)?.map(([chatID, chatData])=>(
+            
+            <div className='userChat' key={chatID} onClick={() => handleChatClick(chatID, chatData.userInfo.displayName, chatData.userInfo.uid)}>
             <div className='userChatInfo'>
-                <span>{chat[1].userInfo.displayName}</span>
-                <p>{chat[1].userInfo.lastMessage?.text}</p>
+                
+                <span>{chatData.userInfo.displayName}</span>
+                <p>{chatData.userInfo.lastMessage?.text}</p>
             </div>  
         </div> 
         ))}

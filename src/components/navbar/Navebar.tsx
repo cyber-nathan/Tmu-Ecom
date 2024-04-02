@@ -51,6 +51,10 @@ function TopNavebar() {
     }
   }
 
+  const handleClick = () => {
+    navigate("/chat")
+  }
+
   return (
     <div>
       <div style={{ paddingBottom: '25px' }}>
@@ -105,7 +109,10 @@ function TopNavebar() {
               title={user["displayName"]}
               menuVariant="light"
             >
+             
+
               {!isAdmin && <NavDropdown.Item>Messages</NavDropdown.Item>}
+
               <NavDropdown.Item onClick={Logout}>Log Out</NavDropdown.Item>
               
             </NavDropdown>
