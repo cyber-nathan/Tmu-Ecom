@@ -42,8 +42,8 @@ interface Props {
     //Validate data client side, there are also rules in firebase in case this fails
     const data_validation = () => {
       if (prodName === '' || price === '' || description === '') { //Or other logic if needed
-        //TODO: Add alert to tell user to fill in all fields
-        console.log("Missing Fields");
+      //  //TODO: Add alert to tell user to fill in all fields
+        alert("Please fill in all fields");
         return false;
       }
       return true;
@@ -65,6 +65,7 @@ interface Props {
             prodName,
             price: Number(price),
             owner: auth.currentUser?.uid,
+            owner_name: auth.currentUser?.displayName,
             description,
             category
           };
@@ -72,6 +73,7 @@ interface Props {
           //add item to firebase database
           try {
             await addDoc(collection(db, "Posts"), newItem);
+            await addDoc(collection(db, "Users"), {uid: auth.currentUser?.uid, posts: newItem.id});
             resetState();
           } catch (e) {
             console.error("Error adding document: ", e);
