@@ -111,7 +111,7 @@ function TopNavebar() {
             >
              
 
-              {!isAdmin && <NavDropdown.Item>Messages</NavDropdown.Item>}
+              {!isAdmin && <NavDropdown.Item onClick={handleClick}>Messages</NavDropdown.Item>}
 
               <NavDropdown.Item onClick={Logout}>Log Out</NavDropdown.Item>
               
