@@ -10,10 +10,14 @@ import Col from 'react-bootstrap/Col';
 import "./ChatPage.css"; // Assuming you create this CSS file for styling
 import Sidebar from './Sidebar';
 import {getCurrentUser} from "./auth";
+import Input from './Input';
 
 function ChatPage() {
 
+
   const user = getCurrentUser();
+  const chatContact = localStorage.getItem('selectedChatDisplayName');
+  const chatData = localStorage.getItem('selectedChatId');
 
   return (
     <div className="chat-page">
@@ -25,27 +29,12 @@ function ChatPage() {
         {/* Sidebar for chat participants */}
 
         <Sidebar/>
-        {/*
-        <div className="chat-sidebar" style={{paddingTop: '15px'}}>
-          <ListGroup>
-          
-            <ListGroup.Item action active>
-              Person1
-            </ListGroup.Item>
-            <ListGroup.Item action>Person2</ListGroup.Item>
-            <ListGroup.Item action>Person2</ListGroup.Item>
-            <ListGroup.Item action>Person2</ListGroup.Item>
-            
-          </ListGroup>
-          
-        </div>
-        */}   
         </Col>
          
         <Col sm={8}>
 
         <div style={{paddingTop: '15px', paddingLeft: '15px'}} >
-          <h2>Person 1</h2>
+          <h2>{chatContact}</h2>
           
           
           
@@ -64,20 +53,10 @@ function ChatPage() {
 
           <div className="chat-input">
 
-            <Form className="message-form">
-              <Form.Control
-                type="text"
-                placeholder="Send Message"
-                className="input-field"
-              />
+          
+            <Input/>
 
 
-              <Button className='sendButton' variant="primary" type="submit">
-                Send
-              </Button>
-
-
-            </Form>
           </div>
 
 

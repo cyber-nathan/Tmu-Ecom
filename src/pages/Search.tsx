@@ -63,7 +63,7 @@ export const Search = () => {
       //if the conversation doesnt exist, create it with an empty array to contian messages
       await setDoc(doc(db, "messages", combinedId), { messages: [] });
       
-      //creates chat person for the sidebar
+      //initializes chat relation between the 2 users
       await updateDoc(doc(db, "chats", currentUser.uid), {
         [combinedId + ".userInfo"]: {
           uid: user.uid,
