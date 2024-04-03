@@ -46,18 +46,27 @@ interface Props {
         alert("Please fill in all fields");
         return false;
       }
+      if(isNaN(Number(price)) || Number(price) < 0) {
+        alert("Please provide a valid price");
+        return false;
+      }
       return true;
     }
 
     const handleSubmit = async () => {
       // Firebase upload
-      if (data_validation() && pictureUpload) { //pictureUpload seperate so IDE dont throw error about pictureUpload being null
+      if (data_validation()) { //pictureUpload seperate so IDE dont throw error about pictureUpload being null
         try {
-          // Upload picture to fireebase storage
-          const file = pictureUpload[0];
-          const storageRef = ref(storage, `images/${uuidv4()}`); //generate unique id for the picture
-          await uploadBytes(storageRef, file);
-          const url = await getDownloadURL(storageRef); // Get the URL to the picture
+          let url = '';
+          if(pictureUpload)
+          {
+            // Upload picture to fireebase storage
+            const file = pictureUpload[0];
+            const storageRef = ref(storage, `images/${uuidv4()}`); //generate unique id for the picture
+            await uploadBytes(storageRef, file);
+            url = await getDownloadURL(storageRef); // Get the URL to the picture
+          }
+
                 
           const newItem: ProdItem = {
             id: new Date().getTime(), // Simple way to generate unique IDs
