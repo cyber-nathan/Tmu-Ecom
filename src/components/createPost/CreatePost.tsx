@@ -66,6 +66,10 @@ interface Props {
             await uploadBytes(storageRef, file);
             url = await getDownloadURL(storageRef); // Get the URL to the picture
           }
+          else
+          {
+            url = 'https://firebasestorage.googleapis.com/v0/b/cps630project-705d1.appspot.com/o/images%2FTMU-rgb.png?alt=media&token=4c91e028-0415-4d97-be05-22cab643ebd3';
+          }
 
                 
           const newItem: ProdItem = {
