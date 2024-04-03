@@ -14,6 +14,7 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    if(!chatID) return;
     const unSub = onSnapshot(doc(db, "messages",  chatID), (doc) => {
       doc.exists() && setMessages(doc.data().messages)
 
