@@ -14,15 +14,20 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const unSub = onSnapshot(doc(db, "messages",  chatID), (doc) => {
-      doc.exists() && setMessages(doc.data().messages)
-
+    if (!chatID) {
+     
+      console.error("No chat ID is selected.");
+      return;
+    }
+  
+    const unSub = onSnapshot(doc(db, "messages", chatID), (doc) => {
+      doc.exists() && setMessages(doc.data().messages);
     });
   
     return () => {
-      unSub()
-    }
-  }, [chatID])
+      unSub();
+    };
+  }, [chatID]);
   
 
   return (
