@@ -37,7 +37,10 @@ function ProductCard(props: any) {
               {props.item.prodName}
             </Card.Title>
             <ListGroup className="list-group-flush">
-              <ListGroup.Item>Price: ${props.item.price}</ListGroup.Item>
+              <ListGroup.Item>
+              <p>Owner: {props.item.owner_name}</p>
+                Price: ${props.item.price}
+                </ListGroup.Item>
               <ListGroup.Item>
                 <Card.Text>
                 {props.item.description}
@@ -56,6 +59,7 @@ function ProductCard(props: any) {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
               />
+
           </Card.Body>
         </div>
       </div>
