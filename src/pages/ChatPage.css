@@ -98,6 +98,7 @@
   gap: 10px;
   color: black;
   cursor: pointer;
+  margin-top: 5px;
 
   &:hover{
       background-color: lightgrey;
@@ -120,6 +121,7 @@
           border-radius: 5px;
           color: black;
           padding: 5px;
+          width: 100%;
           
 
           &::placeholder{
@@ -130,7 +132,34 @@
       }
   }
 }
-  
+
+
 .sidebar{
   padding: 10px;
+}
+
+.input{
+
+  display: flex;
+  
+  .textArea {
+
+    background-color: transparent;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    color: black;
+    padding: 5px;
+    width: 90%;
+    
+  
+    &::placeholder{
+        color: grey;
+        padding-left: 10px;
+    }
+  
+  }
+
+  .sendButton{
+    margin-left: 5px;
+  }
 }

@@ -8,7 +8,6 @@ import { db } from './firebase';
 const Messages = () => {
 
   const user = getCurrentUser();
-  const chatContact = localStorage.getItem('selectedChatDisplayName');
   const chatID = localStorage.getItem('selectedChatId');
 
   const [messages, setMessages] = useState([]);

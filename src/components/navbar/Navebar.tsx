@@ -46,6 +46,7 @@ function TopNavebar() {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       navigate("/");
+      localStorage.clear();
     } catch (error) {
       console.error(error);
     }

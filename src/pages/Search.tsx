@@ -101,7 +101,6 @@ export const Search = () => {
             />
         </div>
         
-        {err && <span>User not found</span>}
         {user && 
         <div className='userChat' onClick={handleSelect}>
           Search Result:

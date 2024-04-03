@@ -3,6 +3,8 @@ import { getCurrentUser } from './auth';
 import { doc, updateDoc, arrayUnion, arrayRemove, Timestamp, serverTimestamp } from "firebase/firestore";
 import { db } from './firebase';
 import { v4 as uuid } from 'uuid';
+import Button from "react-bootstrap/Button";
+
 
 
 export const Input = () => {
@@ -54,9 +56,9 @@ export const Input = () => {
 
   return (
     <div className='input'>
-        <input type='text' placeholder='Type something...' onChange={e=>setText(e.target.value)}/>
+        <input className="textArea" type='text' placeholder='Type something...' value={text} onChange={e=>setText(e.target.value)}/>
         <div className='send'>
-            <button onClick={handleSend}>Send</button>
+            <Button className='sendButton' onClick={handleSend}>Send</Button>
         </div>
     
     </div>
