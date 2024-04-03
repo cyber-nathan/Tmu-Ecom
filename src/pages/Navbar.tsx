@@ -10,6 +10,9 @@ export const Navbar = () => {
   
   const handleButtonClick = () => {
     navigate("/ecom");
+        localStorage.setItem('selectedChatDisplayName', '');
+        localStorage.setItem('selectedUserID', '' )
+        localStorage.setItem('selectedChatId', '');
   };
 
   return (
