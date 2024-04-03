@@ -13,6 +13,7 @@ export const Navbar = () => {
         localStorage.setItem('selectedChatDisplayName', '');
         localStorage.setItem('selectedUserID', '' )
         localStorage.setItem('selectedChatId', '');
+        location.reload();
   };
 
   return (
