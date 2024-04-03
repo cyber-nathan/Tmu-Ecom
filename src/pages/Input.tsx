@@ -30,14 +30,14 @@ export const Input = () => {
         date: Timestamp.now(),
       })
     })
-    await updateDoc(doc(db, "userChats", user.uid), {
+    await updateDoc(doc(db, "chats", user.uid), {
       [chatID + ".lastMessage"]: {
         text,
       },
       [chatID + ".date"]: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "userChats", chatContactID), {
+    await updateDoc(doc(db, "chats", chatContactID), {
       [chatID + ".lastMessage"]: {
         text,
       },
