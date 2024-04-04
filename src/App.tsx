@@ -15,7 +15,6 @@ import ChatPage from './pages/ChatPage';
 import Protected from './components/Protected';
 import  {AppContext}  from './AppContext';
 import { useContext } from 'react';
-import AdminDashboard from './components/adminDashboard/AdminDashboard';
 
 
 function App() {
@@ -33,7 +32,6 @@ function App() {
           {/* Define the route for the Blog component */}
           <Route path="/ecom" element={<ProductDisplay />} />
           <Route path="/chat" element={<ChatPage /> } />
-          <Route path="/admin-dashboard" element={<AdminDashboard /> } />
         </Route>
         
       </Routes>

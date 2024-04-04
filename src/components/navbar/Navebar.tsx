@@ -89,7 +89,7 @@ function TopNavebar() {
             <Form className="d-flex">
             {isAdmin ? (
               // Render Link to Admin Dashboard for admin users
-              <Link to="/admin-dashboard" className="btn btn-outline-primary">Admin Dashboard</Link>
+              <strong>Admin Dashboard</strong>
             ) : (
               // Show Add Post button for non-admin users
               <Button variant="outline-primary" onClick={() => setModalShow(true)}>Add Post</Button>
