@@ -57,10 +57,20 @@ function ProductDisplay() {
         tempItems = tempItems.sort((a, b) => a.id - b.id);
         break;
       case 'Price: Low to High':
-        tempItems = tempItems.sort((a, b) => b.price - a.price);
+        tempItems = tempItems.sort((a, b) => {
+          const priceA = isNaN(Number(a.price)) ? Number.MIN_VALUE : Number(a.price); //If price is not set put it at the top
+          const priceB = isNaN(Number(b.price)) ? Number.MIN_VALUE : Number(b.price);
+          console.log(priceA, priceB);
+          console.log(priceA - priceB);
+          return priceB - priceA;
+        });
         break;
       case 'Price: High to Low':
-        tempItems = tempItems.sort((a, b) => a.price - b.price);
+        tempItems = tempItems.sort((a, b) => {
+          const priceA = isNaN(Number(a.price)) ? Number(b.price) - 1: Number(a.price); //If price is not set put it at the end
+          const priceB = isNaN(Number(b.price)) ? Number(a.price) - 1 : Number(b.price);
+          return priceA - priceB;
+        });
         break;
       case 'Alphabetical':
         tempItems = tempItems.sort((a, b) => b.prodName.localeCompare(a.prodName));

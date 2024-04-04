@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import './ProductCard.css'; // Import your CSS file
 import { useNavigate } from 'react-router-dom';
 import DeletePost from '../deletePost/DeletePost';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // make image fit properly in the card
 
@@ -22,6 +22,23 @@ function ProductCard(props: any) {
     };
 
     const [modalShow, setModalShow] = useState(false);
+
+    useEffect(() => {
+      // Hide price if it is not set
+      if(isNaN(Number(props.item.price))) {
+        const price_tag = document.getElementById(`price-${props.item.prodName}`);
+        if(price_tag) {
+          price_tag.style.display = 'none';
+        }
+      }
+      else {
+        const price_tag = document.getElementById(`price-${props.item.prodName}`);
+        if(price_tag) {
+          price_tag.style.display = 'block';
+        }
+      }
+      }, [props.item.price]);
+    
 
 
   return (
@@ -40,7 +57,7 @@ function ProductCard(props: any) {
             <ListGroup className="list-group-flush">
               <ListGroup.Item>
               <p>Owner: {props.item.owner_name}</p>
-                Price: ${props.item.price}
+                <p id={`price-${props.item.prodName}`}>Price: ${props.item.price}</p>
                 </ListGroup.Item>
               <ListGroup.Item>
                 <Card.Text>
