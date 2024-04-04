@@ -3,15 +3,17 @@ import { getCurrentUser } from './auth'
 
 export const Message = ({message}) => {
 
-  const currentUser = getCurrentUser()
+  const currentUser = getCurrentUser();
 
-  console.log(message)
+  console.log(message);
 
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null); // Initialize ref with the correct type
 
   useEffect(() => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);  
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [message]);
   
   return (
     <div className={`message ${message.senderID === currentUser.uid && "owner"}`}>

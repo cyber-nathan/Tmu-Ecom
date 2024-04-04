@@ -69,3 +69,8 @@ To have this happen automatically for branches without a tracking
 upstream, see 'push.autoSetupRemote' in 'git help config'.    
 ```
 just run the suggest git command 
+
+# Deploying
+- login to firebase with 'firebase login'
+- run 'npm run build'
+- run firebase deploy
