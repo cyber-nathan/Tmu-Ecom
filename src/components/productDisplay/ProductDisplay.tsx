@@ -1,16 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 //import CreatePost from '../createPost/CreatePost';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ProductCard from '../productCard/ProductCard';
 import { DocumentData, collection, query, orderBy, onSnapshot} from "firebase/firestore"; 
-import { db } from '../../pages/firebase.js';
-import { useEffect } from 'react';
+import { db, auth } from '../../pages/firebase.js';
 import TopNavebar from '../navbar/Navebar.js';
 import React from 'react';
 import { AppContext } from '../../AppContext';
 import { Dropdown, Navbar } from 'react-bootstrap';
-import { auth } from '../../pages/firebase';
 import { getIdTokenResult } from 'firebase/auth';
 
 function ProductDisplay() {
@@ -21,7 +19,7 @@ function ProductDisplay() {
   const [ queryCategory, setQueryCategory ] = useState<'Items for Sale' | 'Items Wanted' | 'Academic Services' | 'Any'>('Any');
   const [querySort, setQuerySort] = useState<'Recency' | 'Price: Low to High' | 'Price: High to Low' | 'Alphabetical'>('Recency');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState('');
 
   useEffect(() => {
     const action = getAllPosts(); //Update post list
@@ -30,7 +28,6 @@ function ProductDisplay() {
 
   
   
-  //Use this to check if user is admin
   useEffect(() => {
     const fetchClaims = async () => {
       const idTokenResult = await getIdTokenResult(auth.currentUser);
@@ -39,6 +36,7 @@ function ProductDisplay() {
     }
 
     if (auth.currentUser) {
+      setCurrentUserId(auth.currentUser.uid); // Set current user's ID
       fetchClaims();
     }
   }, []);
@@ -88,6 +86,7 @@ function ProductDisplay() {
       const getallPosts = onSnapshot(q, (snapshot) => {
         const res = snapshot.docs.map((doc) => ({
           docId: doc.id,
+          ownerId: doc.data().owner,
           ...doc.data(),
         }));
         setMasterItems(res);
@@ -128,7 +127,7 @@ function ProductDisplay() {
       </Navbar>
     {[...items].reverse().map((item, index) => (
         // Render a ProductCard for each item, passing the item as a prop
-        <ProductCard key={index} item={item} docId={item.docId} isAdmin={isAdmin} />
+        <ProductCard key={index} item={item} docId={item.docId} ownerId={item.ownerId} isAdmin={isAdmin} currentUserId={currentUserId} />
       ))}
     </div></>
   )

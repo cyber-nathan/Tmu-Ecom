@@ -14,14 +14,17 @@ function ProductCard(props: any) {
   //console.log("this is img", props.item.picture);
     const navigate = useNavigate();
 
-    const { item, isAdmin } = props;
-    const { docId } = props.item;
+    const { item, isAdmin, currentUserId } = props;
+    const { docId, ownerId } = item;
 
     const handleButtonClick = () => {
       navigate("/chat");
     };
 
     const [modalShow, setModalShow] = useState(false);
+
+    // Check if the current user is the owner of the post
+    const isOwner = currentUserId === ownerId;
 
     useEffect(() => {
       // Hide price if it is not set
@@ -40,7 +43,10 @@ function ProductCard(props: any) {
       }, [props.item.price]);
     
 
-
+      console.log("isAdmin:", isAdmin);
+console.log("currentUserId:", currentUserId);
+console.log("ownerId:", ownerId);
+console.log("isOwner:", isOwner);
   return (
     <Card style={{ width: '1000px' }} className='hover-effect'>
       <div className="row">
@@ -68,19 +74,22 @@ function ProductCard(props: any) {
           </Card.Body>
           <Card.Body>
             {isAdmin ? (
-              <Button variant="warning" onClick={() => setModalShow(true)}>Manage</Button>
-            ) : (
-              <Button variant="primary" onClick={handleButtonClick}>Send Message</Button>
-            )}
+              null
+            ) : <Button variant="primary" onClick={handleButtonClick}>Send Message</Button>}
+
+            {/* Ensure delete button is visible for admins or the owner */}
+            {isAdmin || isOwner ? (
+              <Button variant="danger" onClick={() => setModalShow(true)}>Delete Post</Button>
+            ) : null}
 
             <DeletePost
               item={item}
-              docId={docId} // Pass docId here
+              docId={docId}
               show={modalShow}
               onHide={() => setModalShow(false)}
               onDelete={() => {
-                // Logic to handle deletion (e.g., removing the item from the list)
-                setModalShow(false);
+                  // Logic to handle deletion (e.g., removing the item from the list)
+                  setModalShow(false);
               }}
             />
 
