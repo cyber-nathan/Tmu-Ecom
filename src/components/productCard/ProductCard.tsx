@@ -15,6 +15,7 @@ function ProductCard(props: any) {
     const navigate = useNavigate();
 
     const { item, isAdmin } = props;
+    const { docId } = props.item;
 
     const handleButtonClick = () => {
       navigate("/chat");
@@ -55,10 +56,16 @@ function ProductCard(props: any) {
               <Button variant="primary" onClick={handleButtonClick}>Send Message</Button>
             )}
 
-              <DeletePost
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-              />
+            <DeletePost
+              item={item}
+              docId={docId} // Pass docId here
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+              onDelete={() => {
+                // Logic to handle deletion (e.g., removing the item from the list)
+                setModalShow(false);
+              }}
+            />
 
           </Card.Body>
         </div>

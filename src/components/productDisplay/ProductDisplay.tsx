@@ -78,10 +78,13 @@ function ProductDisplay() {
       const q = query(postsRef, orderBy("id", "asc")); //Get all posts by recency (id is the timestamp of the post)
       
       const getallPosts = onSnapshot(q, (snapshot) => {
-        const res = snapshot.docs.map((doc) => doc.data());
+        const res = snapshot.docs.map((doc) => ({
+          docId: doc.id,
+          ...doc.data(),
+        }));
         setMasterItems(res);
         setItems(res);
-      }, (error) => {
+      }, (error) => { // TypeScript should infer this as FirebaseError
         console.error("Error listening to posts:", error);
       });
       
@@ -117,7 +120,7 @@ function ProductDisplay() {
       </Navbar>
     {[...items].reverse().map((item, index) => (
         // Render a ProductCard for each item, passing the item as a prop
-        <ProductCard key={index} item={item} isAdmin={isAdmin} />
+        <ProductCard key={index} item={item} docId={item.docId} isAdmin={isAdmin} />
       ))}
     </div></>
   )
