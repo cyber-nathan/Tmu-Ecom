@@ -60,8 +60,6 @@ function ProductDisplay() {
         tempItems = tempItems.sort((a, b) => {
           const priceA = isNaN(Number(a.price)) ? Number.MIN_VALUE : Number(a.price); //If price is not set put it at the top
           const priceB = isNaN(Number(b.price)) ? Number.MIN_VALUE : Number(b.price);
-          console.log(priceA, priceB);
-          console.log(priceA - priceB);
           return priceB - priceA;
         });
         break;
