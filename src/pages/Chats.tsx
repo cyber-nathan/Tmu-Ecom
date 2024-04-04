@@ -1,7 +1,16 @@
 import React from 'react'
 import { getCurrentUser } from './auth';
 import {getChat} from "./chatContext"
-
+interface UserInfo {
+    displayName: string;
+    uid: string;
+    lastMessage?: { text: string };
+  }
+  
+  interface ChatData {
+    userInfo: UserInfo;
+  }
+  
 export const Chats = () => {
 
     const currentUser = getCurrentUser()
@@ -23,21 +32,18 @@ export const Chats = () => {
         
 
     }
-  return (
+return (
     <div className='chats'>
-        {Object.entries(chats)?.map(([chatID, chatData])=>(
-            
+        {Object.entries(chats)?.map(([chatID, chatData]: [string, any]) => (
             <div className='userChat' key={chatID} onClick={() => handleChatClick(chatID, chatData.userInfo.displayName, chatData.userInfo.uid)}>
-            <div className='userChatInfo'>
-                
-                <span>{chatData.userInfo.displayName}</span>
-                <p>{chatData.userInfo.lastMessage?.text}</p>
-            </div>  
-        </div> 
+                <div className='userChatInfo'>
+                    <span>{chatData.userInfo.displayName}</span>
+                    <p>{chatData.userInfo.lastMessage?.text}</p>
+                </div>  
+            </div> 
         ))}
-        
     </div>
-  )
+)
 }
 
 
