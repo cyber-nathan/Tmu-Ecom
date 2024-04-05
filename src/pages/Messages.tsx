@@ -12,6 +12,7 @@ const Messages = () => {
 
   const [messages, setMessages] = useState([]);
 
+  //retrieves messages form db
   useEffect(() => {
 
     if(!chatID) return;

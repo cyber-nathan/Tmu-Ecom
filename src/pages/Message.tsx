@@ -7,7 +7,7 @@ export const Message = ({message}) => {
 
   console.log(message);
 
-  const ref = useRef<HTMLDivElement>(null); // Initialize ref with the correct type
+  const ref = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
     if (ref.current) {
