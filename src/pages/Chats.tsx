@@ -17,7 +17,7 @@ export const Chats = () => {
     const chats = getChat();
     console.log(Object.entries(chats))
 
-
+    // retrieves the information from the clicked contact and saves it into local storage
     const handleChatClick = (chatID, displayName, userID) => {
 
         localStorage.setItem('selectedChatId', chatID);

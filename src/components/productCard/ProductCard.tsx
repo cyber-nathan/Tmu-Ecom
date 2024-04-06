@@ -4,6 +4,8 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import './ProductCard.css';
 import { useNavigate } from 'react-router-dom';
+import { db } from '../../pages/firebase.js';
+import { doc, deleteDoc, where, writeBatch, collection, query, getDocs } from "firebase/firestore";
 import DeletePost from '../deletePost/DeletePost';
 import { useState, useEffect } from 'react';
 
@@ -22,7 +24,43 @@ function ProductCard(props: any) {
     // Check if the current user is the owner of the post
     const isOwner = currentUserId === ownerId;
 
-    // Hide price if it is not set
+    const handleBanUser = async () => {
+      if (!window.confirm(`Are you sure you want to ban the user and delete all their posts and their account?`)) {
+        return;
+      }
+      
+      try {
+        // Logic to delete all posts by the user
+        const postsRef = collection(db, "Posts");
+        const q = query(postsRef, where("owner", "==", ownerId));
+        const querySnapshot = await getDocs(q);
+        const batch = writeBatch(db); // Use a batch to delete all posts at once
+    
+        querySnapshot.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+    
+        await batch.commit(); // Commit the batch delete for posts
+    
+        // Logic to delete the user from "chatUsers" collection
+        const usersRef = collection(db, "chatUsers");
+        const userQuery = query(usersRef, where("uid", "==", ownerId));
+        const userQuerySnapshot = await getDocs(userQuery);
+    
+        if (!userQuerySnapshot.empty) {
+          // Assuming a single document per user, delete the first (and should be only) document found
+          const userDocRef = userQuerySnapshot.docs[0].ref;
+          await deleteDoc(userDocRef);
+          alert('The user has been banned, all their posts deleted, and their account removed.');
+        } else {
+          alert('The user has been banned and all their posts deleted, but no account was found to remove.');
+        }
+      } catch (error) {
+        console.error("Error banning user, deleting posts, and removing account: ", error);
+        alert('An error occurred while trying to ban the user, delete their posts, and remove their account.');
+      }
+    };
+
     useEffect(() => {
       if(isNaN(Number(props.item.price))) {
         const price_tag = document.getElementById(`price-${props.item.prodName}`);
@@ -37,12 +75,8 @@ function ProductCard(props: any) {
         }
       }
       }, [props.item.price]);
-    
 
-      console.log("isAdmin:", isAdmin);
-console.log("currentUserId:", currentUserId);
-console.log("ownerId:", ownerId);
-console.log("isOwner:", isOwner);
+  
   return (
     <Card style={{ width: '1000px' }} className='hover-effect'>
       <div className="row">
@@ -73,10 +107,17 @@ console.log("isOwner:", isOwner);
               null
             ) : <Button variant="primary" onClick={handleButtonClick}>Send Message</Button>}
 
-            {/* Ensure delete button is visible for admins or the owner */}
-            {isAdmin || isOwner ? (
+            {/* Ensure delete button is visible for the owner */}
+            {isOwner ? (
               <Button variant="danger" onClick={() => setModalShow(true)}>Delete Post</Button>
             ) : null}
+
+            {isAdmin && (
+              <>
+                <Button variant="warning" onClick={() => setModalShow(true)}>Manage</Button>
+                <Button variant="danger" onClick={() => handleBanUser()}>Ban User</Button>
+              </>
+            )}
 
             <DeletePost
               item={item}

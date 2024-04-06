@@ -19,11 +19,13 @@ export const Input = () => {
 
   const handleSend = async() => {
 
+    //checks if contact exists
     if (chatID === null || chatContactID === null) {
       console.error('chatID or chatContactID is null');
       return;
     }
 
+    //creates entry in db for the message
     await updateDoc(doc(db, "messages", chatID), {
       messages: arrayUnion({
         id: uuid(),
@@ -32,6 +34,8 @@ export const Input = () => {
         date: Timestamp.now(),
       })
     })
+
+    //add propoerty of lastest message to each contact
     await updateDoc(doc(db, "chats", user.uid), {
       [chatID + ".lastMessage"]: {
         text,

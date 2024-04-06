@@ -73,6 +73,7 @@ export const Search = () => {
         [combinedId + ".date"]: serverTimestamp(),
       });
 
+      //updates entry in the db
       await updateDoc(doc(db, "chats", user.uid), {
         [combinedId + ".userInfo"]: {
           uid: currentUser.uid,
