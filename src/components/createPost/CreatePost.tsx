@@ -1,4 +1,3 @@
-//import React from 'react'
 import  { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -83,7 +82,7 @@ interface Props {
             category
           };
       
-          //add item to firebase database
+          //add item and associate it with the user in Firebase
           try {
             await addDoc(collection(db, "Posts"), newItem);
             await addDoc(collection(db, "Users"), {uid: auth.currentUser?.uid, posts: newItem.id});
