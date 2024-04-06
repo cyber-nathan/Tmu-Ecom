@@ -30,7 +30,7 @@ function ProductCard(props: any) {
       }
       
       try {
-        // Logic to delete all posts by the user
+        // Delete all posts by the user
         const postsRef = collection(db, "Posts");
         const q = query(postsRef, where("owner", "==", ownerId));
         const querySnapshot = await getDocs(q);
@@ -42,13 +42,13 @@ function ProductCard(props: any) {
     
         await batch.commit(); // Commit the batch delete for posts
     
-        // Logic to delete the user from "chatUsers" collection
+        // Delete the user from "chatUsers" collection
         const usersRef = collection(db, "chatUsers");
         const userQuery = query(usersRef, where("uid", "==", ownerId));
         const userQuerySnapshot = await getDocs(userQuery);
     
         if (!userQuerySnapshot.empty) {
-          // Assuming a single document per user, delete the first (and should be only) document found
+          // Delete the first (and should be only) document found for the user in the collection
           const userDocRef = userQuerySnapshot.docs[0].ref;
           await deleteDoc(userDocRef);
           alert('The user has been banned, all their posts deleted, and their account removed.');
@@ -112,6 +112,7 @@ function ProductCard(props: any) {
               <Button variant="danger" onClick={() => setModalShow(true)}>Delete Post</Button>
             ) : null}
 
+            {/* Ensure that an admin user can delete any post and also had the option the ban the user entirely */}
             {isAdmin && (
               <>
                 <Button variant="warning" onClick={() => setModalShow(true)}>Manage</Button>
@@ -125,7 +126,6 @@ function ProductCard(props: any) {
               show={modalShow}
               onHide={() => setModalShow(false)}
               onDelete={() => {
-                  // Logic to handle deletion (e.g., removing the item from the list)
                   setModalShow(false);
               }}
             />

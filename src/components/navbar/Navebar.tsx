@@ -86,7 +86,7 @@ function TopNavebar() {
 
             <Form className="d-flex">
             {isAdmin ? (
-              // Render Link to Admin Dashboard for admin users
+              // Display Admin Dashboard text for admin users
               <strong>Admin Dashboard</strong>
             ) : (
               // Show Add Post button for non-admin users
@@ -100,33 +100,16 @@ function TopNavebar() {
               
             </Form>
 
-
-            
-
             <NavDropdown
               id="nav-dropdown-dark-example"
               title={user["displayName"]}
               menuVariant="light"
             >
-             
-
               {!isAdmin && <NavDropdown.Item onClick={handleClick}>Messages</NavDropdown.Item>}
 
               <NavDropdown.Item onClick={Logout}>Log Out</NavDropdown.Item>
               
             </NavDropdown>
-          
-            {/* {user ? (
-              <div>
-                <p>{user["displayName"]}</p>
-                <button onClick={Logout} className='btnLogout'>Log Out</button>
-              </div>
-            ) : (
-              <p></p>
-            )} */}
-
-            {/*<p>{user["displayName"]}</p>*/}
-            {/*<button onClick={Logout} className='btnLogout'>Log Out</button>*/}
           </Container>
         </Navbar>
       </div>

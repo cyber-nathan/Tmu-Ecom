@@ -127,10 +127,11 @@ function ProductDisplay() {
       </Navbar>
     {[...items].reverse().map((item, index) => (
         // Render a ProductCard for each item, passing the item as a prop
+        // Include the docId, ownerId, admin status, and currentUserId for creating for deleting posts
         <ProductCard key={index} item={item} docId={item.docId} ownerId={item.ownerId} isAdmin={isAdmin} currentUserId={currentUserId} />
       ))}
     </div></>
   )
 }
-// new item only gets displayed when i reload this component dont know why
+
 export default ProductDisplay;

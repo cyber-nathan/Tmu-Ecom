@@ -8,7 +8,7 @@ export const Navbar = () => {
   const user = getCurrentUser();
   const navigate = useNavigate();
   
-  //take usr back to homepage, clears local storage to preven inconsistencies
+  //take user back to homepage, clears local storage to preven inconsistencies
   const handleButtonClick = () => {
     navigate("/ecom");
         localStorage.setItem('selectedChatDisplayName', '');
