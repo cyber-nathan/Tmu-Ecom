@@ -85,11 +85,7 @@ export default function LoginPage() {
           <Card.Body >
             <Form>
               <script src="firebase.js" defer type='module' ></script>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Torontomu Email"  style={{ width: '100%'}}/>
-              </Form.Group>
-              <Button variant="primary" onClick={googleLogin }>LogIn</Button>{' '}
+              <Button variant="primary" onClick={googleLogin }>Login</Button>{' '}
             </Form>
           </Card.Body>
         </Card>
