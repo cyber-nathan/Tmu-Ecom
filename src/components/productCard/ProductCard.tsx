@@ -2,16 +2,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-import './ProductCard.css'; // Import your CSS file
+import './ProductCard.css';
 import { useNavigate } from 'react-router-dom';
 import DeletePost from '../deletePost/DeletePost';
 import { useState, useEffect } from 'react';
 
-// make image fit properly in the card
-
 function ProductCard(props: any) {
-  //console.log("prodCard", props); // this also get displayed twice for some reason 
-  //console.log("this is img", props.item.picture);
     const navigate = useNavigate();
 
     const { item, isAdmin, currentUserId } = props;
@@ -26,8 +22,8 @@ function ProductCard(props: any) {
     // Check if the current user is the owner of the post
     const isOwner = currentUserId === ownerId;
 
+    // Hide price if it is not set
     useEffect(() => {
-      // Hide price if it is not set
       if(isNaN(Number(props.item.price))) {
         const price_tag = document.getElementById(`price-${props.item.prodName}`);
         if(price_tag) {

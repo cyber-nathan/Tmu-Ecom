@@ -25,6 +25,7 @@ interface Props {
 
   
   function CreatePost(props:Props) {
+    // Post data to be stored in firebase
     const [prodName, setProdName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
@@ -41,8 +42,7 @@ interface Props {
 
     //Validate data client side, there are also rules in firebase in case this fails
     const data_validation = () => {
-      if (prodName === '' || price === '' || description === '') { //Or other logic if needed
-      //  //TODO: Add alert to tell user to fill in all fields
+      if (prodName === '' || price === '' || description === '') { 
         alert("Please fill in all fields");
         return false;
       }
@@ -53,27 +53,27 @@ interface Props {
       return true;
     }
 
+    //On submit, add the item to the database
     const handleSubmit = async () => {
-      // Firebase upload
-      if (data_validation()) { //pictureUpload seperate so IDE dont throw error about pictureUpload being null
+      if (data_validation()) { 
         try {
           let url = '';
+          //If a picture is included, upload it to firebase storage, store the URL in the database
           if(pictureUpload)
           {
-            // Upload picture to fireebase storage
             const file = pictureUpload[0];
-            const storageRef = ref(storage, `images/${uuidv4()}`); //generate unique id for the picture
+            const storageRef = ref(storage, `images/${uuidv4()}`); //generate unique id
             await uploadBytes(storageRef, file);
-            url = await getDownloadURL(storageRef); // Get the URL to the picture
+            url = await getDownloadURL(storageRef);
           }
-          else
+          else //If no picture is included, use a default image
           {
             url = 'https://firebasestorage.googleapis.com/v0/b/cps630project-705d1.appspot.com/o/images%2FTMU-rgb.png?alt=media&token=4c91e028-0415-4d97-be05-22cab643ebd3';
           }
 
                 
           const newItem: ProdItem = {
-            id: new Date().getTime(), // Simple way to generate unique IDs
+            id: new Date().getTime(),
             picture: url,
             prodName,
             price: Number(price),
