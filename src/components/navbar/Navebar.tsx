@@ -4,8 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-//import Modal from 'react-bootstrap/Modal';
-import TmuLogo from'../../picture/tmuLogo.png'; // local rn
+import TmuLogo from'../../picture/tmuLogo.png';
 import CreatePost from '../createPost/CreatePost';
 import { useNavigate, Link } from 'react-router-dom';
 import { signOut, getIdTokenResult } from 'firebase/auth';
@@ -17,8 +16,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 function TopNavebar() {
   const [modalShow, setModalShow] = useState(false);
   const [temp_searchString, setTemp_searchString] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { searchString, setSearchString } = React.useContext(AppContext); //shared state, for search bar to communicate with product display
+  const { searchString, setSearchString } = React.useContext(AppContext); //shared state, cause useEffect in productDisplay to search posts
   const user = JSON.parse(localStorage.getItem('user') ?? 'null');
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();

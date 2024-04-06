@@ -73,8 +73,8 @@ export default function LoginPage() {
     
 
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>        
-        <Card style={{ width: '25%', height:'500px', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>    
+        <Card style={{ width: '25%', height:'40%', justifyContent: 'center', alignItems: 'center', paddingTop: '10%', paddingBottom: '10%' }}>
           <img
             src={TmuLogo}
             width="150"
@@ -82,10 +82,13 @@ export default function LoginPage() {
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
           />
-          <Card.Body >
+          <Card.Body style={{ display: 'flex', justifyContent: 'center' }}>
             <Form>
               <script src="firebase.js" defer type='module' ></script>
-              <Button variant="primary" onClick={googleLogin }>Login</Button>{' '}
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label>Login With Google</Form.Label>
+              </Form.Group>
+              <Button variant="primary" onClick={googleLogin} style={{ minWidth: '100%' }}>Login</Button>
             </Form>
           </Card.Body>
         </Card>
